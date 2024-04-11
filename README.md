@@ -1,4 +1,4 @@
-# Train ResNet on CIFAR-10 from scratch
+# CS5260, Assignment 6, Train ResNet on CIFAR-10 from scratch
 
 ## 🚀 Quick Start
 
@@ -15,42 +15,21 @@ This example provides a training script and an evaluation script. The training s
   - `-e`, `--epoch`: select the epoch to evaluate
   - `-c`, `--checkpoint`: the folder where checkpoints are found
 
-### Install requirements
+### Demo Notebook
 
-```bash
-pip install -r requirements.txt
-```
+In the demo notebook `makeenv.ipynb`, it shows how to install and run on Google Colab.
+Note that the runtime may restart multiple times for installing the dependencies.
 
-### Train
-The folders will be created automatically.
-```bash
-# train with torch DDP with fp32
-colossalai run --nproc_per_node 2 train.py -c ./ckpt-fp32
+### Some Info
 
-# train with torch DDP with mixed precision training
-colossalai run --nproc_per_node 2 train.py -c ./ckpt-fp16 -p torch_ddp_fp16
+The model used in the experiment:        ResNet
+The dataset employed:                    CIFAR-10
+Parallel settings:                       Only 1 GPU is used
+Instructions on how to run your code:    In `makeenv.ipynb`
+Experiment results, presented in a table or figure:
 
-# train with low level zero
-colossalai run --nproc_per_node 2 train.py -c ./ckpt-low_level_zero -p low_level_zero
-```
+Accuracy of the model on the test images: 70.33 %
 
-### Eval
+The original code runs with 80 epoches, but to reduce the time on Google Colab, only 10 epoches are ran.
+So the accuracy is 70.33%.
 
-```bash
-# evaluate fp32 training
-python eval.py -c ./ckpt-fp32 -e 80
-
-# evaluate fp16 mixed precision training
-python eval.py -c ./ckpt-fp16 -e 80
-
-# evaluate low level zero training
-python eval.py -c ./ckpt-low_level_zero -e 80
-```
-
-Expected accuracy performance will be:
-
-| Model     | Single-GPU Baseline FP32 | Booster DDP with FP32 | Booster DDP with FP16 | Booster Low Level Zero | Booster Gemini |
-| --------- | ------------------------ | --------------------- | --------------------- | ---------------------- | -------------- |
-| ResNet-18 | 85.85%                   | 84.91%                | 85.46%                | 84.50%                 | 84.60%         |
-
-**Note: the baseline is adapted from the [script](https://pytorch-tutorial.readthedocs.io/en/latest/tutorial/chapter03_intermediate/3_2_2_cnn_resnet_cifar10/) to use `torchvision.models.resnet18`**
