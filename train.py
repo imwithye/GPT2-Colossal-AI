@@ -23,7 +23,7 @@ from colossalai.nn.optimizer import HybridAdam
 # ==============================
 # Prepare Hyperparameters
 # ==============================
-NUM_EPOCHS = 80
+NUM_EPOCHS = 10
 LEARNING_RATE = 1e-3
 
 
